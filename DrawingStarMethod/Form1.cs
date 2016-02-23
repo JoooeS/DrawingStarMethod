@@ -1,7 +1,7 @@
 ﻿/// Description: Program containing generic DrawStar and FillStar methods which could then
 /// be used in any other program
-/// Author: Mr. T.
-/// Date: February 2014
+/// Author: Joe S
+/// Date: February 2016
 
 using System;
 using System.Collections.Generic;
@@ -17,6 +17,9 @@ namespace DrawingStarMethod
 {
     public partial class Form1 : Form
     {
+
+        PointF[] star = new PointF[10];
+
         public Form1()
         {
             InitializeComponent();
@@ -57,18 +60,23 @@ namespace DrawingStarMethod
             // to draw each side so that it will end up being the number of pixels wide that the user desires.
             float scale = pixels / 207;
 
-            formGraphics.DrawLine(drawPen, 80 * scale + x, 77 * scale + y, 103 * scale + x, 4 * scale + y);
-            formGraphics.DrawLine(drawPen, 103 * scale + x, 4 * scale + y, 126 * scale + x, 78 * scale + y);
-            formGraphics.DrawLine(drawPen, 126 * scale + x, 78 * scale + y, 207 * scale + x, 78 * scale + y);
-            formGraphics.DrawLine(drawPen, 207 * scale + x, 78 * scale + y, 143 * scale + x, 125 * scale + y);
-            formGraphics.DrawLine(drawPen, 143 * scale + x, 125 * scale + y, 167 * scale + x, 197 * scale + y);
-            formGraphics.DrawLine(drawPen, 167 * scale + x, 197 * scale + y, 103 * scale + x, 152 * scale + y);
-            formGraphics.DrawLine(drawPen, 103 * scale + x, 152 * scale + y, 40 * scale + x, 196 * scale + y);
-            formGraphics.DrawLine(drawPen, 40 * scale + x, 196 * scale + y, 63 * scale + x, 123 * scale + y);
-            formGraphics.DrawLine(drawPen, 63 * scale + x, 123 * scale + y, 0 * scale + x, 77 * scale + y);
-            formGraphics.DrawLine(drawPen, 0 * scale + x, 77 * scale + y, 80 * scale + x, 77 * scale + y);
+            
 
-            // TODO put the above points into a PointF array and use DrawPolygon to draw your star
+            star[0] = new PointF(80 * scale + x, 77 * scale + y);
+            star[1] = new PointF(103 * scale + x, 4 * scale + y);
+            star[2] = new PointF(126 * scale + x, 78 * scale + y);
+            star[3] = new PointF(207 * scale + x, 78 * scale + y);
+            star[4] = new PointF(143 * scale + x, 125 * scale + y);
+            star[5] = new PointF(167 * scale + x, 197 * scale + y);
+            star[6] = new PointF(103 * scale + x, 152 * scale + y);
+            star[7] = new PointF(40 * scale + x, 196 * scale + y);
+            star[8] = new PointF(63 * scale + x, 123 * scale + y);
+            star[9] = new PointF(0 * scale + x, 77 * scale + y);
+
+
+            formGraphics.DrawPolygon(drawPen, star);
+
+
         }
 
         /// Gathers information from the input boxes and then sends values
@@ -87,7 +95,7 @@ namespace DrawingStarMethod
             size = Convert.ToSingle(sizeInput.Text);
 
             formGraphics.Clear(Color.DarkKhaki);
-            FillStar(drawBrush, xValue, yValue, size);
+            FillStar(drawBrush, star);
         }
 
         /// <summary>
@@ -97,9 +105,10 @@ namespace DrawingStarMethod
         /// <param name="x">X value of the top left corner of the square within which the filled star is drawn</param>
         /// <param name="y">Y value of the top left corner of the square within which the filled star is drawn</param>
         /// <param name="pixels">Side lengths of the square within which the star is drawn</param>
-        public void FillStar(SolidBrush drawBrush, float x, float y, float pixels)
+        public void FillStar(SolidBrush drawBrush, PointF[] star)
         {
-            // TODO create FillStar code here similar to DrawStar code but using FillPolygon instead
+            Graphics fg = this.CreateGraphics();
+            fg.FillPolygon(drawBrush, star);
 
         }
     }
